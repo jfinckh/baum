@@ -2,26 +2,35 @@ package tree;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class InsertMethods {
-    public static Node searchNodeForInsert(Node nodePointer, int key) {  // suche nach Einfüge-Node -> falls Key bereits vorhanden, wird null zurückgegeben
-        if (nodePointer.getKeys().contains(key)) return null;
+
+    /**
+     * Suche Knoten zum einfügen.
+     *
+     * @param nodePointer Zeiger auf Knoten
+     * @param key Key der eingefügt werden soll
+     * @return knoten an dem eingefügt werden soll oder null wenn key bereits exisitiert
+     * */
+    public static Optional<Node> getNodeForInsert(Node nodePointer, int key) {  // suche nach Einfüge-Node -> falls Key bereits vorhanden, wird null zurückgegeben
+        if (nodePointer.getKeys().contains(key)) return Optional.empty();
         else {
             while (!nodePointer.getSons().isEmpty()) {
                 for (int i = 0; i<nodePointer.getKeys().size(); i++) {
                     if (key < nodePointer.getKeys().get(i)) {
                         nodePointer = nodePointer.getSons().get(i);
-                        if (nodePointer.getKeys().contains(key)) return null;
+                        if (nodePointer.getKeys().contains(key)) return Optional.empty();
                         break;
                     } else if (key > nodePointer.getKeys().get(i) && i == nodePointer.getKeys().size()-1) {
                         nodePointer = nodePointer.getSons().get(i+1);
-                        if (nodePointer.getKeys().contains(key)) return null;
+                        if (nodePointer.getKeys().contains(key)) return Optional.empty();
                         break;
                     }
                 }
             }
-            if (nodePointer.getKeys().contains(key)) return null;
-            else return nodePointer;
+            if (nodePointer.getKeys().contains(key)) return Optional.empty();
+            else return Optional.of(nodePointer);
         }
     }
 

@@ -199,7 +199,7 @@ public class Gui {
     }
 
     private static void buildTree(int m) throws InterruptedException {
-        Tree tree = new Tree(m);
+        Tree tree = Tree.getNewTree(m);
 
         JFrame f = new JFrame();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
